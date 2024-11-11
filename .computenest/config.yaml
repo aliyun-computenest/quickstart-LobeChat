@@ -34,3 +34,4 @@ Artifact:
     ArtifactProperty:
       RegionId: cn-hangzhou
       Url: 'resources/artifact_resources/docker_compose.tar'
+AcrImageBuilder:
