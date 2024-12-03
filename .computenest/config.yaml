@@ -1,5 +1,5 @@
 Service:
-  RegionId: cn-hangzhou
+  RegionId: ap-southeast-1
   DeployType: ros
   OperationMetadata:
     StatusOperationConfigs:
@@ -32,7 +32,7 @@ Artifact:
     ArtifactType: File
     ArtifactName: aliyun-computenest_quickstart-LobeChat-docker-compose
     ArtifactProperty:
-      RegionId: cn-hangzhou
+      RegionId: ap-southeast-1
       Url: 'resources/artifact_resources/docker_compose.tar'
   Artifact_2:
     ArtifactType: AcrImage
