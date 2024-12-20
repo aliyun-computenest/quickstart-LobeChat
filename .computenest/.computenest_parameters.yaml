@@ -1,1 +1,0 @@
-{"ServiceType":"private","AllowedRegions":["cn-hangzhou","cn-shanghai","cn-beijing"],"ArtifactSourceType":"DockerCompose","RepoName":"aliyun-computenest/quickstart-LobeChat","Arch":"EcsSingle","DockerComposeEnvPath":".env","RegionId":"ap-southeast-1","CustomParameters":"","DockerComposeYamlPath":"docker-compose.yaml"}
