@@ -1,49 +1,63 @@
 Service:
-  RegionId: ap-southeast-1
+  RegionId: cn-hangzhou
   DeployType: ros
   OperationMetadata:
     StatusOperationConfigs:
-      - TemplateName: '单机版'
+      - TemplateName: 'ECS单机版'
         SupportOperations:
           - Start
           - Stop
           - Restart
     SupportBackup: true
+    ModifyParametersConfig:
+      - TemplateName: ECS单机版
+        Operation:
+          - Name: 变更ECS实例规格
+            Description: 变更ECS实例规格
+            Type: Custom
+            Parameters:
+              - EcsInstanceType
+          - Name: 变更ECS实例密码
+            Description: 变更ECS实例密码
+            Type: Custom
+            Parameters:
+              - InstancePassword
   DeployMetadata:
     SupplierDeployMetadata:
-      FileArtifactRelation:
-        '{{ computenest::file::aliyun-computenest_quickstart-LobeChat-docker-compose }}':
-          ArtifactId: ${Artifact.Artifact_1.ArtifactId}
-          ArtifactVersion: ${Artifact.Artifact_1.ArtifactVersion}
+      ArtifactRelation:
+        ecs_image_quickstart-LobeChat:
+          ArtifactId: ${Artifact.EcsImage.ArtifactId}
+          ArtifactVersion: draft
     TemplateConfigs:
-      - Name: 单机版
+      - Name: ECS单机版
         Url: 'ros_templates/template.yaml'
         AllowedRegions:
-          - cn-hangzhou
-          - cn-shanghai
-          - cn-beijing
+          - ap-southeast-1
   ServiceType: private
   ServiceInfo:
     Locale: zh-CN
-    ShortDescription: docker compose deploy
+    ShortDescription: demo
     Image: 'resources/icons/service_logo.png'
 Artifact:
-  Artifact_1:
-    ArtifactType: File
-    ArtifactName: aliyun-computenest_quickstart-LobeChat-docker-compose
-    ArtifactProperty:
+  EcsImage:
+    ArtifactType: EcsImage
+    ArtifactName: ecs_image_quickstart-LobeChat
+    Description: quickstart-LobeChat EcsImage
+    SupportRegionIds:
+        - ap-southeast-1
+    ArtifactBuildProperty:
+      CodeRepo:
+        Platform: github
+        Owner: LYH-RAIN
+        RepoName: aliyun-computenest/quickstart-LobeChat
+        Branch: ecs-image
       RegionId: ap-southeast-1
-      Url: 'resources/artifact_resources/docker_compose.tar'
-  Artifact_2:
-    ArtifactType: AcrImage
-    ArtifactName: AcrImage-lobehub-lobe-chat
-    ArtifactProperty:
-      RepoName: ${AcrImageBuilder.AcrImage_1.RepoName}
-      Tag: ${AcrImageBuilder.AcrImage_1.Tag}
-      RepoType: Public
-AcrImageBuilder:
-  AcrImage_1:
-    BuildType: DockerRepo
-    DockerRepoUrl: lobehub/lobe-chat
-    RepoName: lobehub/lobe-chat
-    Tag: latest
+      CommandType: RunShellScript
+      CommandContent: |-
+        mkdir -p /root/application
+        if [ -e "/root/code/.env" ]; then cp -r "/root/code/.env" "/root/application/"; fi
+        if [ -e "/root/code/docker-compose.yaml" ]; then cp -r "/root/code/docker-compose.yaml" "/root/application/"; fi
+        cd /root/application
+        sed -i 's/pull_policy: always/pull_policy: if_not_present/g' docker-compose.yaml
+        docker compose -f docker-compose.yaml build
+        docker compose -f docker-compose.yaml pull || true;

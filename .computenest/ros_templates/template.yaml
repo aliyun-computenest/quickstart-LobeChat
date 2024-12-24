@@ -257,7 +257,7 @@ Resources:
         Ref: ZoneId
       SecurityGroupId:
         Ref: SecurityGroup
-      ImageId: "{{resolve:oos:aliyun/services/computenest/images/aliyun_3_2104_docker_compose_2_27_compute_nest}}"
+      ImageId: ecs_image_quickstart-LobeChat
       Password:
         Ref: InstancePassword
       InstanceType:
@@ -280,9 +280,6 @@ Resources:
       CommandContent:
         Fn::Sub:
           - |
-            wget '{{ computenest::file::aliyun-computenest_quickstart-LobeChat-docker-compose }}' -O /root/application/docker_compose.tar
-            tar -xvf /root/application/docker_compose.tar -C /root/application
-
             cat > /etc/systemd/system/quickstart-LobeChat.service <<EOF
             [Unit]
             Description=Docker Compose Application Service
@@ -292,7 +289,7 @@ Resources:
             [Service]
             Type=oneshot
             RemainAfterExit=yes
-            WorkingDirectory=/root/application/docker_compose
+            WorkingDirectory=/root/application
             ExecStart=/usr/bin/docker compose -f docker-compose.yaml up -d
             ExecStop=/usr/bin/docker compose down
             TimeoutStartSec=0
@@ -301,9 +298,8 @@ Resources:
             WantedBy=multi-user.target
             EOF
 
-            systemctl enable quickstart-LobeChat
-
             
+            systemctl enable quickstart-LobeChat
             systemctl start quickstart-LobeChat
           - RegionId:
               Ref: ALIYUN::Region

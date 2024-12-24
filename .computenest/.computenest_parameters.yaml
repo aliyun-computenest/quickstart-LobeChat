@@ -1,1 +1,11 @@
-{"ServiceType":"private","AllowedRegions":["cn-hangzhou","cn-shanghai","cn-beijing"],"ArtifactSourceType":"DockerCompose","RepoName":"aliyun-computenest/quickstart-LobeChat","Arch":"EcsSingle","DockerComposeEnvPath":".env","RegionId":"ap-southeast-1","CustomParameters":"","DockerComposeYamlPath":"docker-compose.yaml"}
+ServiceType: private
+ArtifactSourceType: DockerCompose
+ServiceBuildRegion: ap-southeast-1
+RepoName: aliyun-computenest/quickstart-LobeChat
+DockerComposeEnvPath: .env
+RegionId: cn-hangzhou
+CustomParameters: ''
+DockerComposeYamlPath: docker-compose.yaml
+Owner: LYH-RAIN
+Branch: ecs-image
+Platform: github
