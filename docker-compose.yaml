@@ -4,6 +4,7 @@ services:
     image: lobehub/lobe-chat
     container_name: lobe-chat
     restart: always
+    pull_policy: always
     ports:
       - '3210:3210'
     environment:
