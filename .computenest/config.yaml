@@ -50,7 +50,7 @@ Artifact:
         Platform: github
         Owner: LYH-RAIN
         RepoName: aliyun-computenest/quickstart-LobeChat
-        Branch: ecs-image
+        Branch: test-update
       RegionId: ap-southeast-1
       CommandType: RunShellScript
       CommandContent: |-
