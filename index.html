@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>LobeChat计算巢快速部署 - Aliyun 计算巢 x Demo</title>
+
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="search/main.js"></script>
+  
+
+  
+
+  <script src="js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#lobechat">LobeChat计算巢快速部署</a></li>
+              
+                  <li><a href="#_1">概述</a></li>
+                  
+              
+                  <li><a href="#_2">前提条件</a></li>
+                  
+              
+                  <li><a href="#_3">计费说明</a></li>
+                  
+              
+                  <li><a href="#_4">部署架构</a></li>
+                  
+              
+                  <li><a href="#_5">参数说明</a></li>
+                  
+              
+                  <li><a href="#_6">部署流程</a></li>
+                  
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="lobechat">LobeChat计算巢快速部署</h1>
+<blockquote>
+<p><strong>免责声明：</strong>本服务由第三方提供，我们尽力确保其安全性、准确性和可靠性，但无法保证其完全免于故障、中断、错误或攻击。因此，本公司在此声明：对于本服务的内容、准确性、完整性、可靠性、适用性以及及时性不作任何陈述、保证或承诺，不对您使用本服务所产生的任何直接或间接的损失或损害承担任何责任；对于您通过本服务访问的第三方网站、应用程序、产品和服务，不对其内容、准确性、完整性、可靠性、适用性以及及时性承担任何责任，您应自行承担使用后果产生的风险和责任；对于因您使用本服务而产生的任何损失、损害，包括但不限于直接损失、间接损失、利润损失、商誉损失、数据损失或其他经济损失，不承担任何责任，即使本公司事先已被告知可能存在此类损失或损害的可能性；我们保留不时修改本声明的权利，因此请您在使用本服务前定期检查本声明。如果您对本声明或本服务存在任何问题或疑问，请联系我们。</p>
+</blockquote>
+<h2 id="_1">概述</h2>
+<p>LobeChat是现代化设计的开源 ChatGPT/LLMs 聊天应用与开发框架<br />
+它支持语音合成、多模态、可扩展的（<a href="https://lobehub.com/zh/blog/openai-function-call">function call</a>）插件系统，使用LobeChat可以一键免费拥有你自己的ChatGPT/Gemini/Claude/Ollama 应用</p>
+<h2 id="_2">前提条件</h2>
+<p><font style="color:rgb(51, 51, 51);">部署Dify社区版服务实例，需要对部分阿里云资源进行访问和创建操作。因此您的账号需要包含如下资源的权限。</font><font style="color:rgb(51, 51, 51);"> </font><strong><font style="color:rgb(51, 51, 51);">说明</font></strong><font style="color:rgb(51, 51, 51);">：当您的账号是RAM账号时，才需要添加此权限。</font></p>
+<table>
+<thead>
+<tr>
+<th><font style="color:rgb(51, 51, 51);">权限策略名称</font></th>
+<th><font style="color:rgb(51, 51, 51);">备注</font></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><font style="color:rgb(51, 51, 51);">AliyunECSFullAccess</font></td>
+<td><font style="color:rgb(51, 51, 51);">管理云服务器服务（ECS）的权限</font></td>
+</tr>
+<tr>
+<td><font style="color:rgb(51, 51, 51);">AliyunVPCFullAccess</font></td>
+<td><font style="color:rgb(51, 51, 51);">管理专有网络（VPC）的权限</font></td>
+</tr>
+<tr>
+<td><font style="color:rgb(51, 51, 51);">AliyunROSFullAccess</font></td>
+<td><font style="color:rgb(51, 51, 51);">管理资源编排服务（ROS）的权限</font></td>
+</tr>
+<tr>
+<td><font style="color:rgb(51, 51, 51);">AliyunComputeNestUserFullAccess</font></td>
+<td><font style="color:rgb(51, 51, 51);">管理计算巢服务（ComputeNest）的用户侧权限</font></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">计费说明</h2>
+<p><font style="color:rgb(51, 51, 51);">LobeChat社区版在计算巢部署的费用主要涉及：</font></p>
+<ul>
+<li><font style="color:rgb(51, 51, 51);">所选vCPU与内存规格</font></li>
+<li><font style="color:rgb(51, 51, 51);">系统盘类型及容量</font></li>
+<li><font style="color:rgb(51, 51, 51);">公网带宽</font></li>
+</ul>
+<h2 id="_4">部署架构</h2>
+<p><img alt="" src="img/deploy.png" /></p>
+<h2 id="_5">参数说明</h2>
+<table>
+<thead>
+<tr>
+<th><font style="color:rgb(51, 51, 51);">参数组</font></th>
+<th><font style="color:rgb(51, 51, 51);">参数项</font></th>
+<th><font style="color:rgb(51, 51, 51);">说明</font></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><font style="color:rgb(51, 51, 51);">服务实例</font></td>
+<td><font style="color:rgb(51, 51, 51);">服务实例名称</font></td>
+<td><font style="color:rgb(51, 51, 51);">长度不超过64个字符，必须以英文字母开头，可包含数字、英文字母、短划线（-）和下划线（_）</font></td>
+</tr>
+<tr>
+<td></td>
+<td><font style="color:rgb(51, 51, 51);">地域</font></td>
+<td><font style="color:rgb(51, 51, 51);">服务实例部署的地域</font></td>
+</tr>
+<tr>
+<td></td>
+<td><font style="color:rgb(51, 51, 51);">付费类型</font></td>
+<td><font style="color:rgb(51, 51, 51);">资源的计费类型：按量付费和包年包月</font></td>
+</tr>
+<tr>
+<td><font style="color:rgb(51, 51, 51);">ECS实例配置</font></td>
+<td><font style="color:rgb(51, 51, 51);">实例类型</font></td>
+<td><font style="color:rgb(51, 51, 51);">可用区下可以使用的实例规格</font></td>
+</tr>
+<tr>
+<td></td>
+<td><font style="color:rgb(51, 51, 51);">实例密码</font></td>
+<td><font style="color:rgb(51, 51, 51);">长度8-30，必须包含三项（大写字母、小写字母、数字、 ()`~!@#$%^&amp;*-+=</td>
+</tr>
+<tr>
+<td><font style="color:rgb(51, 51, 51);">网络配置</font></td>
+<td><font style="color:rgb(51, 51, 51);">可用区</font></td>
+<td><font style="color:rgb(51, 51, 51);">ECS实例所在可用区</font></td>
+</tr>
+<tr>
+<td></td>
+<td><font style="color:rgb(51, 51, 51);">VPC ID</font></td>
+<td><font style="color:rgb(51, 51, 51);">资源所在VPC</font></td>
+</tr>
+<tr>
+<td></td>
+<td><font style="color:rgb(51, 51, 51);">交换机ID</font></td>
+<td><font style="color:rgb(51, 51, 51);">资源所在交换机</font></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">部署流程</h2>
+<ol>
+<li>访问计算巢LobeChat<a href="https://computenest.console.aliyun.com/service/instance/create/default?type=user&amp;ServiceName=LobeChat%E7%A4%BE%E5%8C%BA%E7%89%88">部署链接</a>，按提示填写部署参数</li>
+<li>填写实例参数<img alt="" src="img/param1.png" /></li>
+<li>填写可用区和网络参数并点击“下一步：确认订单”<img alt="" src="img/param2.png" /></li>
+<li>点击立即创建，等待服务实例部署完成<img alt="" src="img/param3.png" /></li>
+<li>服务实例部署完成后，点击实例ID进入到详情界面<img alt="" src="img/serviceInstance1.png" /></li>
+<li>访问服务实例的使用URL<img alt="" src="img/serviceInstance2.png" /></li>
+<li>进入到LobeChat应用界面，并配置您使用模型的API Key<img alt="" src="img/lobechat.png" /></li>
+<li>开始使用LobeChat！</li>
+</ol>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.6.1
+  Docs Build Date UTC : 2025-04-08 07:44:00.624216+00:00
+  -->
+</body>
+</html>
