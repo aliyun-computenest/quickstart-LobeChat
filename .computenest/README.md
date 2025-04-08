@@ -9,6 +9,8 @@
 ├── resources                   - 服务资源文件
 │   ├── icons
 │   │   └── service_logo.png    - 服务logo
+│   ├── architecture
+│   │   └── architecture.jpg    - 架构图
 │   └── artifact_resources      - 部署物相关资源文件
 ├── ros_templates               - 服务ROS模板目录，支持多模板
 │   └── template.yaml           - ROS模板，ROS模板引擎根据该模板会自动创建出所有的资源
