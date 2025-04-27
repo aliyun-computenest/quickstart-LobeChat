@@ -3,25 +3,25 @@ Service:
   DeployType: ros
   OperationMetadata:
     StatusOperationConfigs:
-      - TemplateName: 'ECS单机版'
-        SupportOperations:
-          - Start
-          - Stop
-          - Restart
+    - TemplateName: 'ECS单机版'
+      SupportOperations:
+      - Start
+      - Stop
+      - Restart
     SupportBackup: true
     ModifyParametersConfig:
-      - TemplateName: ECS单机版
-        Operation:
-          - Name: 变更ECS实例规格
-            Description: 变更ECS实例规格
-            Type: Custom
-            Parameters:
-              - EcsInstanceType
-          - Name: 变更ECS实例密码
-            Description: 变更ECS实例密码
-            Type: Custom
-            Parameters:
-              - InstancePassword
+    - TemplateName: ECS单机版
+      Operation:
+      - Name: 变更ECS实例规格
+        Description: 变更ECS实例规格
+        Type: Custom
+        Parameters:
+        - EcsInstanceType
+      - Name: 变更ECS实例密码
+        Description: 变更ECS实例密码
+        Type: Custom
+        Parameters:
+        - InstancePassword
   DeployMetadata:
     SupplierDeployMetadata:
       ArtifactRelation:
@@ -29,22 +29,29 @@ Service:
           ArtifactId: ${Artifact.EcsImage.ArtifactId}
           ArtifactVersion: draft
     TemplateConfigs:
-      - Name: ECS单机版
-        Url: 'ros_templates/template.yaml'
-        AllowedRegions:
-          - ap-southeast-1
+    - Name: ECS单机版
+      Url: 'ros_templates/template.yaml'
+      AllowedRegions:
+      - ap-southeast-1
   ServiceType: private
   ServiceInfo:
-    Locale: zh-CN
-    ShortDescription: demo
-    Image: 'resources/icons/service_logo.png'
+  - Locale: zh-CN
+    Name: LobeChat社区版
+    ShortDescription: "现代化设计的开源 ChatGPT/LLMs 聊天应用与开发框架\n支持语音合成、多模态、可扩展的（function call）插件系统\n
+      一键免费拥有你自己的 ChatGPT/Gemini/Claude/Ollama 应用"
+    Image: 
+      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/54252293-582f-42bd-8e72-4c8ab7c446e0.png
+    SoftwareInfos:
+    - Name: lobechat
+      Version: '1.12'
+      Locale: zh-CN
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
     ArtifactName: ecs_image_quickstart-LobeChat
     Description: quickstart-LobeChat EcsImage
     SupportRegionIds:
-        - ap-southeast-1
+    - ap-southeast-1
     ArtifactBuildProperty:
       CodeRepo:
         Platform: github
