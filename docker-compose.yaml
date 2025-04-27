@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   lobe-chat:
-    image: lobehub/lobe-chat:1.63.3
+    image: lobehub/lobe-chat:latest
     container_name: lobe-chat
     restart: always
     pull_policy: always
