@@ -12,11 +12,6 @@ Service:
     ModifyParametersConfig:
     - TemplateName: ECS单机版
       Operation:
-      - Name: 变更ECS实例规格
-        Description: 变更ECS实例规格
-        Type: Custom
-        Parameters:
-        - EcsInstanceType
       - Name: 变更ECS实例密码
         Description: 变更ECS实例密码
         Type: Custom
@@ -28,11 +23,79 @@ Service:
         ecs_image_quickstart-LobeChat:
           ArtifactId: ${Artifact.EcsImage.ArtifactId}
           ArtifactVersion: draft
+      SupplierTemplateConfigs:
+      - Name: ECS单机版
+        Url: ros_templates/template1.yaml
+        PredefinedParameters:
+        - Name: 试用套餐
+          Parameters:
+            EcsInstanceType:
+            - ecs.u1-c1m1.large
+            PayType: PostPaid
+            VpcOption: ExistingVPC
+          OrderList:
+          - EcsInstanceType
+          - PayType
+          - VpcOption
+          TrialType: TrialOnly
+          Type: Normal
+        AllowedRegions:
+        - ap-southeast-1
+        - cn-hangzhou
+        - cn-huhehaote
+        - cn-shanghai
+        - cn-qingdao
+        - cn-beijing
+        - cn-zhangjiakou
+        - cn-wulanchabu
+        - cn-shenzhen
+        - cn-heyuan
+        - cn-guangzhou
+        - cn-chengdu
+        - cn-hongkong
+        - ap-southeast-3
+        - ap-southeast-5
+        - ap-southeast-6
+        - ap-southeast-7
+        - ap-northeast-1
+        - ap-northeast-2
+        - eu-central-1
+        - eu-west-1
+        - us-west-1
+        - us-east-1
+        - me-central-1
+        - me-east-1
     TemplateConfigs:
     - Name: ECS单机版
       Url: 'ros_templates/template.yaml'
       AllowedRegions:
       - ap-southeast-1
+      PredefinedParameters:
+      - Name: 试用套餐
+        Parameters:
+          EcsInstanceType:
+          - ecs.u1-c1m1.large
+          PayType: PostPaid
+          VpcOption: ExistingVPC
+        OrderList:
+        - EcsInstanceType
+        - PayType
+        - VpcOption
+        TrialType: TrialOnly
+        Type: Normal
+      TrialHiddenParameterKeys:
+      - VpcId
+      - PayPeriod
+      - VSwitchId
+      - PayPeriodUnit
+      - PayType
+      CreateFromExistInstanceParameterKeys:
+      - VpcId
+      - PayPeriod
+      - VSwitchId
+      - VpcOption
+      - PayPeriodUnit
+      - PayType
   ServiceType: private
   ServiceInfo:
   - Locale: zh-CN
@@ -41,7 +104,9 @@ Service:
       一键免费拥有你自己的 ChatGPT/Gemini/Claude/Ollama 应用"
     Image: 
       https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/54252293-582f-42bd-8e72-4c8ab7c446e0.png
-    SoftwareInfos: []
+    Softwares:
+    - Name: LobeChat
+      Version: 1.99.0
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
