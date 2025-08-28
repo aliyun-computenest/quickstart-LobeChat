@@ -25,7 +25,7 @@ Service:
           ArtifactVersion: draft
       SupplierTemplateConfigs:
       - Name: ECS单机版
-        Url: ros_templates/template1.yaml
+        Url: ros_templates/template.yaml
         PredefinedParameters:
         - Name: 试用套餐
           Parameters:
