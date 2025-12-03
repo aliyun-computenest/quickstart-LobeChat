@@ -3,7 +3,7 @@ Service:
   DeployType: ros
   OperationMetadata:
     StatusOperationConfigs:
-    - TemplateName: 'ECS单机版'
+    - TemplateName: ECS单机版
       SupportOperations:
       - Start
       - Stop
@@ -67,7 +67,7 @@ Service:
         - me-east-1
     TemplateConfigs:
     - Name: ECS单机版
-      Url: 'ros_templates/template.yaml'
+      Url: ros_templates/template.yaml
       AllowedRegions:
       - ap-southeast-1
       PredefinedParameters:
@@ -100,13 +100,12 @@ Service:
   ServiceInfo:
   - Locale: zh-CN
     Name: LobeChat社区版
-    ShortDescription: "现代化设计的开源 ChatGPT/LLMs 聊天应用与开发框架\n支持语音合成、多模态、可扩展的（function call）插件系统\n
-      一键免费拥有你自己的 ChatGPT/Gemini/Claude/Ollama 应用"
-    Image: 
-      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/54252293-582f-42bd-8e72-4c8ab7c446e0.png
+    ShortDescription: "现代化设计的开源 ChatGPT/LLMs 聊天应用与开发框架\n支持语音合成、多模态、可扩展的（function call）插件系统\n\
+      \ 一键免费拥有你自己的 ChatGPT/Gemini/Claude/Ollama 应用"
+    Image: https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/54252293-582f-42bd-8e72-4c8ab7c446e0.png
     Softwares:
     - Name: LobeChat
-      Version: 1.99.0
+      Version: v1.143.1
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
@@ -122,11 +121,18 @@ Artifact:
         Branch: ecs-image
       RegionId: ap-southeast-1
       CommandType: RunShellScript
-      CommandContent: |-
-        mkdir -p /root/application
-        if [ -e "/root/code/.env" ]; then cp -r "/root/code/.env" "/root/application/"; fi
-        if [ -e "/root/code/docker-compose.yaml" ]; then cp -r "/root/code/docker-compose.yaml" "/root/application/"; fi
+      CommandContent: 'mkdir -p /root/application
+
+        if [ -e "/root/code/.env" ]; then cp -r "/root/code/.env" "/root/application/";
+        fi
+
+        if [ -e "/root/code/docker-compose.yaml" ]; then cp -r "/root/code/docker-compose.yaml"
+        "/root/application/"; fi
+
         cd /root/application
-        sed -i 's/pull_policy: always/pull_policy: if_not_present/g' docker-compose.yaml
+
+        sed -i ''s/pull_policy: always/pull_policy: if_not_present/g'' docker-compose.yaml
+
         docker compose -f docker-compose.yaml build
-        docker compose -f docker-compose.yaml pull || true;
+
+        docker compose -f docker-compose.yaml pull || true;'
