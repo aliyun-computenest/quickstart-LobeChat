@@ -102,10 +102,11 @@ Service:
     Name: LobeChat社区版
     ShortDescription: "现代化设计的开源 ChatGPT/LLMs 聊天应用与开发框架\n支持语音合成、多模态、可扩展的（function call）插件系统\n\
       \ 一键免费拥有你自己的 ChatGPT/Gemini/Claude/Ollama 应用"
-    Image: https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/54252293-582f-42bd-8e72-4c8ab7c446e0.png
+    Image: 
+      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/54252293-582f-42bd-8e72-4c8ab7c446e0.png
     Softwares:
     - Name: LobeChat
-      Version: v1.143.1
+      Version: v1.143.2
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
