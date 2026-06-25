@@ -5,9 +5,18 @@ services:
     container_name: lobe-chat
     restart: always
     pull_policy: always
+    entrypoint: ["/bin/sh"]
+    command:
+      - "-lc"
+      - "node /app/mock-market.js & exec /bin/node /app/startServer.js"
     ports:
       - '3210:3210'
+    volumes:
+      - ./mock-market.js:/app/mock-market.js:ro
     environment:
       OPENAI_API_KEY: FakeKey  # 传入的 API Key
       OPENAI_PROXY_URL: https://api-proxy.com/v1
       ACCESS_CODE: lobe66
+      FEATURE_FLAGS: "-market"
+      ENABLED_MCP: "0"
+      MARKET_BASE_URL: http://127.0.0.1:3999

@@ -130,6 +130,9 @@ Artifact:
         if [ -e "/root/code/docker-compose.yaml" ]; then cp -r "/root/code/docker-compose.yaml"
         "/root/application/"; fi
 
+        if [ -e "/root/code/mock-market.js" ]; then cp -r "/root/code/mock-market.js"
+        "/root/application/"; fi
+
         cd /root/application
 
         sed -i ''s/pull_policy: always/pull_policy: if_not_present/g'' docker-compose.yaml
