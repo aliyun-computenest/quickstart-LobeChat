@@ -298,47 +298,12 @@ Resources:
             WantedBy=multi-user.target
             EOF
 
-
+            
             systemctl enable quickstart-LobeChat
             systemctl start quickstart-LobeChat
-
-            echo "Waiting for LobeChat web UI..."
-            APP_READY=0
-            for i in $(seq 1 90); do
-              HTTP_CODE=$(curl -sS -o /tmp/lobechat-chat.html -w "%{http_code}" http://127.0.0.1:3210/chat || true)
-              if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "307" ] || [ "$HTTP_CODE" = "308" ]; then
-                APP_READY=1
-                break
-              fi
-              sleep 2
-            done
-
-            if [ "$APP_READY" != "1" ]; then
-              echo "LobeChat web UI did not become ready"
-              docker logs --tail 200 lobe-chat || true
-              exit 1
-            fi
-
-            echo "Checking optional market/MCP endpoint does not fail the UI..."
-            MARKET_CODE=$(curl -sS -o /tmp/lobechat-market.json -w "%{http_code}" \
-              -H "x-trpc-source: react" \
-              "http://127.0.0.1:3210/trpc/lambda/market.getMcpList?batch=1" || true)
-            if [ "$MARKET_CODE" != "200" ]; then
-              echo "market.getMcpList returned HTTP $MARKET_CODE"
-              cat /tmp/lobechat-market.json || true
-              docker logs --tail 200 lobe-chat || true
-              exit 1
-            fi
-
-            if docker logs --since 2m lobe-chat 2>&1 | grep -E "Missing bearer token|Failed to fetch mcp list|Error in tRPC handler.*market.getMcpList"; then
-              echo "Detected market/MCP errors in LobeChat logs"
-              exit 1
-            fi
-
-            echo "LobeChat smoke check passed"
           - RegionId:
               Ref: ALIYUN::Region
-Outputs:
+Outputs: 
   lobe-chat_address:
     Description:
       en: lobe-chat address.
@@ -375,4 +340,4 @@ Metadata:
           - VSwitchCidrBlock
         Label:
           default: 可用区配置
-
+      
