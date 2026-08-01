@@ -106,7 +106,7 @@ Service:
       https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/54252293-582f-42bd-8e72-4c8ab7c446e0.png
     Softwares:
     - Name: LobeChat
-      Version: v2.2.10
+      Version: v2.2.12
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
